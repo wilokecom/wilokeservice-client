@@ -10,7 +10,7 @@ return [
             'name'    => 'wilokeservice_client[secret_token]',
             'id'      => 'secret_token',
             'default' => '',
-            'desc'    => '<a target="_blank" href="'.wilokeServiceGetConfigFile('app')['howToUpdateDoc'].'">Where Is My Secret Token Code?</a>'
+            'desc'    => '<a target="_blank" href="'. wilokeServiceClientGetConfigFile('app')['howToUpdateDoc'].'">Where Is My Secret Token Code?</a>'
         ],
         [
             'type' => 'submit',

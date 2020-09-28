@@ -15,7 +15,7 @@ class General
     public static function isWilcityServicePage()
     {
         if (!is_admin() || !isset($_GET['page']) ||
-            $_GET['page'] !== wilokeServiceGetConfigFile('app')['updateSlug']) {
+            $_GET['page'] !== wilokeServiceClientGetConfigFile('app')['updateSlug']) {
             return false;
         }
         

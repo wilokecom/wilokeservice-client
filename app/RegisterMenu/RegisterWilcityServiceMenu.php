@@ -23,7 +23,7 @@ class RegisterWilcityServiceMenu
      */
     private function isWilcityServiceArea()
     {
-        if (is_admin() && isset($_GET['page']) && $_GET['page'] == wilokeServiceGetConfigFile('app')['updateSlug']) {
+        if (is_admin() && isset($_GET['page']) && $_GET['page'] == wilokeServiceClientGetConfigFile('app')['updateSlug']) {
             return true;
         }
         
@@ -52,14 +52,14 @@ class RegisterWilcityServiceMenu
     public function registerMenu()
     {
         $icon = get_option(
-                    wilokeServiceGetConfigFile('app')['unreadOption']
+	        wilokeServiceClientGetConfigFile('app')['unreadOption']
                 ) === 'yes' ? 'dashicons-megaphone' : 'dashicons-share-alt';
         
         add_menu_page(
-            wilokeServiceGetConfigFile('app')['menu']['title'],
-            wilokeServiceGetConfigFile('app')['menu']['title'],
-            wilokeServiceGetConfigFile('app')['menu']['roles'],
-            wilokeServiceGetConfigFile('app')['menu']['slug'],
+	        wilokeServiceClientGetConfigFile('app')['menu']['title'],
+	        wilokeServiceClientGetConfigFile('app')['menu']['title'],
+	        wilokeServiceClientGetConfigFile('app')['menu']['roles'],
+	        wilokeServiceClientGetConfigFile('app')['menu']['slug'],
             [$this, 'settings'],
             $icon
         );
@@ -103,14 +103,14 @@ class RegisterWilcityServiceMenu
     {
         $this->fsMethodNotification();
         $this->saveConfiguration();
-        $aConfiguration = wilokeServiceGetConfigFile('settings');
+        $aConfiguration = wilokeServiceClientGetConfigFile('settings');
         do_action('wilokeservice-clients/theme-updates');
         $aValues  = get_option(self::$optionKey);
         $aValues  = maybe_unserialize($aValues);
         $adminUrl = add_query_arg(
             [
-                'page'              => wilokeServiceGetConfigFile('app')['updateSlug'],
-                'is-refresh-update' => 'yes'
+	            'page'              => wilokeServiceClientGetConfigFile('app')['updateSlug'],
+	            'is-refresh-update' => 'yes'
             ], admin_url('admin.php'));
         ?>
         <form action="<?php echo esc_url($adminUrl); ?>" method="POST"

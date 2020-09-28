@@ -5,7 +5,7 @@ namespace WilokeServiceClient\Controllers;
 use WilokeServiceClient\Helpers\ThemeInformation;
 use function GuzzleHttp\Psr7\str;
 use WilokeServiceClient\Helpers\General;
-use WilokeServiceClient\Helpers\RestApi;
+use WilokeServiceClient\Helpers\RestAPI;
 
 /**
  * Class ScheduleCheckUpdateController
@@ -46,8 +46,8 @@ class ScheduleCheckUpdateController
         $class    = 'notice notice-error';
         $adminUrl = add_query_arg(
             [
-                'page'              => wilokeServiceGetConfigFile('app')['updateSlug'],
-                'is-refresh-update' => 'yes'
+	            'page'              => wilokeServiceClientGetConfigFile('app')['updateSlug'],
+	            'is-refresh-update' => 'yes'
             ], admin_url('admin.php'));
         
         $message =
@@ -78,7 +78,7 @@ class ScheduleCheckUpdateController
             return false;
         }
         
-        $aResponse = RestApi::get(RestApi::buildThemeEndpoint(ThemeInformation::getThemeSlug()));
+        $aResponse = RestAPI::get(RestAPI::buildThemeEndpoint(ThemeInformation::getThemeSlug()));
         
         if ($aResponse['status'] == 'success') {
             $aPlugins = isset($aResponse['aPlugins']) ? $aResponse['aPlugins'] : false;

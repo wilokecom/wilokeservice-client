@@ -13,7 +13,7 @@ class Controller
      */
     protected function isWilcityServiceArea()
     {
-        if (!isset($_REQUEST['page']) || $_REQUEST['page'] !== wilokeServiceGetConfigFile('app')['updateSlug']) {
+        if (!isset($_REQUEST['page']) || $_REQUEST['page'] !== wilokeServiceClientGetConfigFile('app')['updateSlug']) {
             return false;
         }
         

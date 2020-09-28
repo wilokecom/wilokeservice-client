@@ -2,7 +2,7 @@
 
 namespace WilokeServiceClient\Controllers;
 
-use WilokeServiceClient\Helpers\RestApi;
+use WilokeServiceClient\Helpers\RestAPI;
 
 /**
  * Class NotificationController
@@ -117,7 +117,7 @@ class NotificationController extends Controller
      */
     public function fetchNotifications()
     {
-        $aResponse = RestApi::get('notifications');
+        $aResponse = RestAPI::get('notifications');
        
         if ($aResponse['status'] === '404' ||
             $aResponse['status'] === 'error' ||
