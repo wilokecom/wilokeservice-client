@@ -24,7 +24,7 @@ class ScheduleCheckUpdateController
     
     public function focusClearHasUpdate()
     {
-        if (General::isWilcityServicePage()) {
+        if (General::isWilokeServicePage()) {
             delete_option('wilokeservice_has_update');
         }
     }

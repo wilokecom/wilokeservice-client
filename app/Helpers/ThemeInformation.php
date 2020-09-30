@@ -8,19 +8,36 @@ namespace WilokeServiceClient\Helpers;
  */
 class ThemeInformation
 {
-    /**
-     * @return array|false|string
-     */
-    public static function getThemeSlug()
-    {
-        $oTheme   = wp_get_theme();
-        $template = $oTheme->get('Author');
-        if (strpos($template, 'child') === false && strtolower($template)) {
-            $themeName = strtolower($oTheme->get('Template'));
-        } else {
-            $themeName = $oTheme->get('Name');
-        }
-        
-        return $themeName;
-    }
+	public static $oTheme;
+
+	public static function getTheme()
+	{
+		if (empty(self::$oTheme)) {
+			self::$oTheme = wp_get_theme();
+		}
+	}
+
+	/**
+	 * @return array|false|string
+	 */
+	public static function getThemeSlug()
+	{
+		self::getTheme();
+
+		$stylesheet = self::$oTheme->get_stylesheet();
+		if (strpos($stylesheet, 'child') !== false) {
+			$stylesheet = str_replace(['child', 'childtheme', 'child-theme'], ['', '', ''], $stylesheet);
+		}
+
+		return $stylesheet;
+	}
+
+	public static function isWilokeThemeAuthor()
+	{
+		self::getTheme();
+		
+		$author = self::$oTheme->get('Author');
+		
+		return strpos(strtolower($author), 'wiloke') !== false;
+	}
 }

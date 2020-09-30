@@ -12,7 +12,7 @@ class General
     /**
      * @return bool
      */
-    public static function isWilcityServicePage()
+    public static function isWilokeServicePage()
     {
         if (!is_admin() || !isset($_GET['page']) ||
             $_GET['page'] !== wilokeServiceClientGetConfigFile('app')['updateSlug']) {

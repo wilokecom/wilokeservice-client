@@ -27,12 +27,13 @@ class GetAPI extends RestAPI implements IRestAPI
 
 	public function buildCurlBodyOptions()
 	{
-		$endpoint = home_url('/');
 		if (!empty($this->aArgs)) {
 			$endpoint = add_query_arg(
 				$this->aArgs,
 				$this->buildEndpoint($this->endpoint)
 			);
+		} else {
+			$endpoint = $this->buildEndpoint($this->endpoint);
 		}
 
 		return $this->getDefaultCurlOptions() + [

@@ -35,7 +35,7 @@ class RestAPI
 	 */
 	public static function getBearToken()
 	{
-		$token = GetSettings::getOptionField('secret_token');
+		$token = Option::getOptionField('secret_token');
 
 		return 'Bearer ' . $token;
 	}
@@ -85,7 +85,7 @@ class RestAPI
 			CURLOPT_TIMEOUT        => 30,
 			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
 			CURLOPT_HTTPHEADER     => [
-				"authorization: Bearer " . GetSettings::getOptionField('secret_token'),
+				"authorization: Bearer " . Option::getOptionField('secret_token'),
 				"cache-control: no-cache",
 				'Content-Type:application/json'
 			]
@@ -108,12 +108,14 @@ class RestAPI
 	 */
 	public function request(IRestAPI $oRequestMethod)
 	{
-		$token = GetSettings::getOptionField('secret_token');
+		$token = Option::getOptionField('secret_token');
 		if (empty($token)) {
-			return [
+			$this->aResponse = [
 				'status' => 'error',
 				'msg'    => 'The Secret Token is required'
 			];
+
+			return $this;
 		}
 
 		$curl = curl_init();

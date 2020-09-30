@@ -2,17 +2,19 @@
 
 namespace WilokeServiceClient\Helpers;
 
-class GetSettings
+use WilokeServiceClient\RegisterMenu\RegisterWilcityServiceMenu;
+
+class Option
 {
     static $aOptions = null;
     
     public static function getOptions()
     {
-        if (self::$aOptions !== null) {
+        if (!empty(self::$aOptions)) {
             return self::$aOptions;
         }
         
-        self::$aOptions = maybe_unserialize(get_option('wilokeservice_client'));
+        self::$aOptions = maybe_unserialize(get_option(RegisterWilcityServiceMenu::$optionKey));
         
         return self::$aOptions;
     }

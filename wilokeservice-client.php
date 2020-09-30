@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WilokeService Client
- * Plugin URI: https://wilcityservice.com/
+ * Plugin URI: https://github.com/wilokecom/wilokeservice-client
  * Description: Easily update Wiloke Theme
  * Version: 1.0
  * Author: Wiloke
@@ -9,7 +9,7 @@
  * Text Domain: wilokeservice
  * Domain Path: /i18n/languages/
  *
- * @package wilcity
+ * @package wiloke
  */
 
 use WilokeServiceClient\Helpers\GetAPI;
@@ -76,7 +76,7 @@ App::bind('postAPI', new PostAPI());
 /**
  * @return RestAPI
  */
-function wilcityServiceRestRequest()
+function wilokeServiceRestRequest()
 {
 	return App::get('rest');
 }
@@ -84,7 +84,7 @@ function wilcityServiceRestRequest()
 /**
  * @return GetAPI
  */
-function wilcityServiceGetRequest()
+function wilokeServiceGetRequest()
 {
 	return App::get('getAPI');
 }
@@ -92,7 +92,7 @@ function wilcityServiceGetRequest()
 /**
  * @return PostAPI
  */
-function wilcityServicePostRequest()
+function wilokeServicePostRequest()
 {
 	return App::get('postAPI');
 }

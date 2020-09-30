@@ -13,7 +13,7 @@ final class Download
 	 *
 	 * @return mixed
 	 */
-	public static function parsePluginName($pluginPath)
+	public static function parsePluginOrThemeName($pluginPath)
 	{
 		$aParsed = explode('/', $pluginPath);
 
@@ -76,19 +76,11 @@ final class Download
 				'date'            => time(),
 				'type'            => $type,
 				'path'            => $path,
-				'token'           => GetSettings::getOptionField('secret_token'),
-				'wiloke-download' => self::parsePluginName($path)
+				'token'           => Option::getOptionField('secret_token'),
+				'wiloke-download' => self::parsePluginOrThemeName($path)
 			],
 			wilokeServiceClientGetConfigFile('app')['serviceURL']
 		);
-	}
-
-	/**
-	 * @return string
-	 */
-	public static function pluginsDirPath()
-	{
-		return dirname(WILOKESERVICE_CLIENT_DIR) . WILOKESERVICE_DS;
 	}
 
 	/**
@@ -106,8 +98,8 @@ final class Download
 	 *
 	 * @return string
 	 */
-	public static function createPluginZipPlaceholder($path)
+	public static function downloadThemeUrl($path)
 	{
-		return self::pluginsDirPath() . self::parsePluginName($path) . '.zip';
+		return self::downloadUrl($path, 'theme');
 	}
 }
