@@ -9,8 +9,9 @@ namespace WilokeServiceClient\Helpers;
  */
 class RestAPI
 {
-	protected $endpoint;
-	protected $aResponse;
+	protected      $endpoint;
+	protected      $aResponse;
+	private static $token;
 
 	/**
 	 * @return string
@@ -85,7 +86,7 @@ class RestAPI
 			CURLOPT_TIMEOUT        => 30,
 			CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
 			CURLOPT_HTTPHEADER     => [
-				"authorization: Bearer " . Option::getOptionField('secret_token'),
+				"authorization: Bearer " . self::$token,
 				"cache-control: no-cache",
 				'Content-Type:application/json'
 			]
@@ -95,6 +96,12 @@ class RestAPI
 	public function getResponse()
 	{
 		return $this->aResponse;
+	}
+
+	public function setToken($token)
+	{
+		self::$token = $token;
+		return $this;
 	}
 
 	public function isError()
@@ -108,8 +115,11 @@ class RestAPI
 	 */
 	public function request(IRestAPI $oRequestMethod)
 	{
-		$token = Option::getOptionField('secret_token');
-		if (empty($token)) {
+		if (empty(self::$token)) {
+			self::$token = Option::getOptionField('secret_token');
+		}
+
+		if (empty(self::$token)) {
 			$this->aResponse = [
 				'status' => 'error',
 				'msg'    => 'The Secret Token is required'

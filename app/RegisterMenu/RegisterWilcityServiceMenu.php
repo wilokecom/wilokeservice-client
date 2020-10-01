@@ -87,10 +87,8 @@ class RegisterWilcityServiceMenu
 				$aOptions[$key] = sanitize_text_field($val);
 			}
 
-			update_option(self::$optionKey, $aOptions);
-
-			$aResponse = wilokeServiceRestRequest()->request(wilokeServiceGetRequest()->setEndpoint('verify-token'))
-				->getResponse();
+			$aResponse = wilokeServiceRestRequest()->setToken($aOptions['secret_token'])
+				->request(wilokeServiceGetRequest()->setEndpoint('verify-token'))->getResponse();
 
 			if ($aResponse['status'] == 'error') {
 				add_action('wilokeservice-clients/before/theme-updates', function () use ($aResponse) {
@@ -99,10 +97,10 @@ class RegisterWilcityServiceMenu
 						<?php echo $aResponse['msg']; ?>
                     </div>
 					<?php
-					delete_option(self::$optionKey);
 					delete_option(self::$tokenProvidedKey);
 				});
 			} else {
+				update_option(self::$optionKey, $aOptions);
 				update_option(self::$tokenProvidedKey, true);
 			}
 		}
