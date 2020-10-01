@@ -12,6 +12,8 @@
  * @package wiloke
  */
 
+use WilokeServiceClient\Controllers\AdminAnnouncementController;
+use WilokeServiceClient\Controllers\LicenseController;
 use WilokeServiceClient\Helpers\GetAPI;
 use WilokeServiceClient\Helpers\PostAPI;
 use WilokeServiceClient\Controllers\DownloadController;
@@ -29,6 +31,7 @@ define('WILOKESERVICE_CLIENT_SOURCE', plugin_dir_url(__FILE__) . 'source/');
 define('WILOKESERVICE_CLIENT_ASSSETS', plugin_dir_url(__FILE__) . 'assets/');
 define('WILOKESERVICE_VERSION', '1.0');
 define('WILOKESERVICE_DS', '/');
+define('WILOKESERVICE_PREFIX', 'wilokeservice_');
 
 require plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
@@ -36,8 +39,12 @@ register_activation_hook(__FILE__, 'wilokeServiceRegisterScheduleHook');
 if (!function_exists('wilokeServiceRegisterScheduleHook')) {
 	function wilokeServiceRegisterScheduleHook()
 	{
-		if (!wp_next_scheduled('wilokeservice_hourly_event')) {
-			wp_schedule_event(time(), 'hourly', 'wilokeservice_hourly_event');
+		if (!wp_next_scheduled(WILOKESERVICE_PREFIX . 'hourly_event')) {
+			wp_schedule_event(time(), 'hourly', WILOKESERVICE_PREFIX . 'hourly_event');
+		}
+
+		if (!wp_next_scheduled(WILOKESERVICE_PREFIX . 'daily_event')) {
+			wp_schedule_event(time(), 'daily', WILOKESERVICE_PREFIX . 'daily_event');
 		}
 	}
 }
@@ -45,7 +52,8 @@ register_deactivation_hook(__FILE__, 'wilokeServiceUnRegisterScheduleHook');
 if (!function_exists('wilokeServiceUnRegisterScheduleHook')) {
 	function wilokeServiceUnRegisterScheduleHook()
 	{
-		wp_clear_scheduled_hook('wilokeservice_hourly_event');
+		wp_clear_scheduled_hook(WILOKESERVICE_PREFIX . 'hourly_event');
+		wp_clear_scheduled_hook(WILOKESERVICE_PREFIX . 'daily_event');
 	}
 }
 
@@ -65,10 +73,10 @@ if (!function_exists('wilokeServiceClientGetConfigFile')) {
 
 new RegisterWilcityServiceMenu();
 new UpdateController();
-//new ScheduleCheckUpdateController();
 new DownloadController();
-//new NotificationController();
-//new Shortcodes();
+new LicenseController();
+new AdminAnnouncementController();
+
 App::bind('rest', new RestAPI());
 App::bind('getAPI', new GetAPI());
 App::bind('postAPI', new PostAPI());

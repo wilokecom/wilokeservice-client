@@ -102,6 +102,8 @@ class RegisterWilcityServiceMenu
 			} else {
 				update_option(self::$optionKey, $aOptions);
 				update_option(self::$tokenProvidedKey, true);
+
+				do_action('wiloke/wilcityservice-client/app/RegisterMenu/RegisterWilcityServiceMenu/savedConfiguration', $aOptions);
 			}
 		}
 	}
