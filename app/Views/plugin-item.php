@@ -7,9 +7,7 @@ $aCurrentPluginInfo
 	$this->aInstalledPlugins[$this->buildPluginPathInfo($aPlugin['slug'])] : false;
 ?>
 <div class="wil-plugin-wrapper wil-item-wrapper card" style="width: 300px;">
-	<?php
-	$productType = isset($aPlugin['productType']) ? $aPlugin['productType'] : 'Free';
-	?>
+	<?php $productType = isset($aPlugin['isRequired']) && $aPlugin['isRequired'] == 'yes' ? 'Required' : 'Optional'; ?>
     <div class="wil-top" style="padding: 10px; color: red; font-weight: 800">
 		<?php if (!empty($aPlugin['productUrl'])) : ?>
             <span class="product-type"><a target="_blank"
@@ -40,7 +38,7 @@ $aCurrentPluginInfo
             <span class="version" style=" display: block; margin-bottom: 2px; color: #222">New Version: <span
                         class="wil-new-version"><?php echo esc_html($aPlugin['version']); ?></span></span>
             <span class="updated_at"
-                  style=" display: block; color: #222">Updated at:<?php echo date_i18n(get_option('date_format'),
+                  style=" display: block; color: #222">Last Update: <?php echo date_i18n(get_option('date_format'),
 					$aPlugin['updatedAt']); ?></span>
         </div>
         <div class="description" style="font-size: 13px">

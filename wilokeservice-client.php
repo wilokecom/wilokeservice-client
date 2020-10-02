@@ -121,4 +121,3 @@ register_deactivation_hook(
 );
 
 do_action('wilokeservice/loaded');
-

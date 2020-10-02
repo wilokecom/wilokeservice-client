@@ -146,6 +146,7 @@ class RestAPI
 			}
 
 			$aResponse = json_decode($response, true);
+
 			if ($aResponse['status'] == 'error') {
 				$this->aResponse = $aResponse;
 			} else {

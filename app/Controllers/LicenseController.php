@@ -28,7 +28,6 @@ class LicenseController
 	{
 		$aResponse = wilokeServiceRestRequest()->request(wilokeServiceGetRequest()->setEndpoint('verify-license'))
 			->getResponse();
-
 		AnnouncementModel::delete('error', 'license_expiry');
 		AnnouncementModel::delete('warning', 'license_warning');
 

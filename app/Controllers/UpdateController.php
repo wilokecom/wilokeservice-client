@@ -379,6 +379,8 @@ class UpdateController
 				$aPlugin['productType'] : 'free',
 			'productUrl'   => isset($aPlugin['productUrl']) && !empty($aPlugin['productUrl']) ?
 				$aPlugin['productUrl'] : '',
+			'isRequired'   => isset($aPlugin['isRequired']) && !empty($aPlugin['isRequired']) ?
+				$aPlugin['isRequired'] : 'no',
 			'requires_php' => $this->phpRequired
 		];
 	}
