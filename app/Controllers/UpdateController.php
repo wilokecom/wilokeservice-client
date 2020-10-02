@@ -127,7 +127,6 @@ class UpdateController
 
 			$aPluginResponse = wilokeServiceRestRequest()->request(wilokeServiceGetRequest()->setEndpoint('themes/'
 				. ThemeInformation::getThemeSlug() . '/plugins'))->getResponse();
-
 			if ($aPluginResponse['status'] === 'error') {
 				$this->aResponse['aPlugins'] = [];
 			} else {
@@ -496,6 +495,7 @@ class UpdateController
 
 			foreach ($this->aPlugins as $aPlugin) {
 				$path = $this->buildPluginPathInfo($aPlugin['slug']);
+
 				if (isset($this->aInstalledPlugins[$path]) &&
 					version_compare($this->aInstalledPlugins[$path]['Version'],
 						$aPlugin['version'], '<')

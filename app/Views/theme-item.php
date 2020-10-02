@@ -4,6 +4,15 @@ use WilokeServiceClient\Helpers\General;
 
 ?>
 <div class="wil-theme-item-wrapper wil-item-wrapper card <?php echo $this->isCurrentTheme($aTheme) ? 'active' : ''; ?>">
+    <div class="wil-top" style="padding: 10px; color: red; font-weight: 800">
+		<?php if (!empty($aTheme['documentationUrl'])) : ?>
+            <span class="product-type">
+                <a target="_blank"
+                   href="<?php echo esc_url($aTheme['documentationUrl']); ?>"
+                   style="color:green">Documentation</a></span>
+		<?php endif; ?>
+    </div>
+
     <div class="content" style="padding: 1.3em 1.2em;">
         <img class="right floated mini ui image" style="width: 60px"
              src="<?php echo esc_url($aTheme['thumbnail']); ?>">
@@ -34,7 +43,7 @@ use WilokeServiceClient\Helpers\General;
              data-item-type="theme">
 			<?php if ($this->isCurrentTheme($aTheme)) : ?>
 				<?php if ((General::isNewVersion($aTheme['version'], $this->oCurrentThemeVersion->get('Version')))): ?>
-                    <a class="ui basic green button wil-btn-action">Update</a>
+                    <a class="ui basic green button wil-update-theme">Update</a>
 				<?php endif; ?>
                 <a class="ui basic red button wil-btn-action" target="_blank" href="<?php echo esc_url
 				($this->aTheme['preview']); ?>">Changelog</a>
@@ -45,8 +54,10 @@ use WilokeServiceClient\Helpers\General;
                        data-action="wiloke_download_theme" data-target="<?php echo $aTheme['slug']; ?>"
                        target="_blank">Install</a>
 				<?php else: ?>
-                    <a class="wil-install-theme ui basic green button wil-btn-action" href="#"
-                       data-action="wiloke_activate_theme">Active</a>
+					<?php if (!defined('WILOKE_THEME')) : ?>
+                        <a class="wil-install-theme ui basic green button wil-btn-action" href="#"
+                           data-action="wiloke_activate_theme">Active</a>
+					<?php endif; ?>
 				<?php endif; ?>
 			<?php endif; ?>
         </div>

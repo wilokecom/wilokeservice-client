@@ -102,7 +102,7 @@
                     $card = $btn.closest('.wil-plugin-wrapper'),
                     $currentVer = $card.find('.wil-current-version'),
                     $newVer = $card.find('.wil-new-version'),
-                    $buttonRow = $btn.parents('.wil-button-wrapper');
+                    $buttonRow = $btn.closest('.wil-button-wrapper');
 
                 $msg = $('#wilokeservice-update-plugins').find('.wil-plugin-update-msg');
 
@@ -119,10 +119,9 @@
                 hideMsg();
 
                 let oStatus = wp.updates.ajax('update-plugin', {
-                    plugin: $buttonRow.data('plugin'),
-                    slug: $buttonRow.data('slug')
+                    plugin: $buttonRow.data('item-path'),
+                    slug: $buttonRow.data('item-slug')
                 });
-
                 oStatus.fail(response => {
                     showErrorMsg(response.errorMessage + ' Please try to click Refresh button then click on Update button again');
                     $card.removeClass('ui form loading');
@@ -164,7 +163,7 @@
                 let oArgs = _.extend({
                     success: '',
                     error: '',
-                    slug: $buttonRow.data('slug')
+                    slug: $buttonRow.data('item-slug')
                 });
 
                 let oStatus = wp.updates.updateTheme(oArgs);

@@ -5,24 +5,25 @@ use WilokeServiceClient\Helpers\General;
 $aCurrentPluginInfo
 	= isset($this->aInstalledPlugins[$this->buildPluginPathInfo($aPlugin['slug'])]) ?
 	$this->aInstalledPlugins[$this->buildPluginPathInfo($aPlugin['slug'])] : false;
+
+if (isset($aPlugin['isRequired']) && $aPlugin['isRequired'] == 'yes') {
+	$pluginTypeColor = "red";
+	$productType = "Required";
+} else {
+	$pluginTypeColor = "green";
+	$productType = "Optional";
+}
+
 ?>
 <div class="wil-plugin-wrapper wil-item-wrapper card" style="width: 300px;">
-	<?php $productType = isset($aPlugin['isRequired']) && $aPlugin['isRequired'] == 'yes' ? 'Required' : 'Optional'; ?>
     <div class="wil-top" style="padding: 10px; color: red; font-weight: 800">
 		<?php if (!empty($aPlugin['productUrl'])) : ?>
-            <span class="product-type"><a target="_blank"
-                                          href="<?php echo esc_url($aPlugin['productUrl']);
-			                              ?>"><?php echo ucfirst
-					($productType); ?></a></span>
+            <span class="product-type">
+                <a target="_blank"
+                   href="<?php echo esc_url($aPlugin['productUrl']); ?>" style="color:<?php echo esc_attr($pluginTypeColor); ?>"><?php echo ucfirst($productType);
+                   ?></a></span>
 		<?php else : ?>
-            <span class="product-type"><?php echo ucfirst($productType); ?></span>
-		<?php endif; ?>
-		<?php
-		if (!$aCurrentPluginInfo && !empty($aPlugin['productUrl'])) :
-			?>
-            <a class="buy-now" href="<?php echo esc_url($aPlugin['productUrl']); ?>"
-               style="padding: 10px; color: green;
-                                    font-weight: 800" target="_blank">Buy now</a>
+            <span class="product-type" style="color:<?php echo esc_attr($pluginTypeColor); ?>"><?php echo ucfirst($productType); ?></span>
 		<?php endif; ?>
     </div>
     <div class="content" style="padding: 1.3em 1.2em;">
