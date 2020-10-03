@@ -3,8 +3,8 @@
 use WilokeServiceClient\Helpers\General;
 
 $aCurrentPluginInfo
-	= isset($this->aInstalledPlugins[$this->buildPluginPathInfo($aPlugin['slug'])]) ?
-	$this->aInstalledPlugins[$this->buildPluginPathInfo($aPlugin['slug'])] : false;
+	= isset($this->aInstalledPlugins[$this->buildPluginPathInfo($aPlugin)]) ?
+	$this->aInstalledPlugins[$this->buildPluginPathInfo($aPlugin)] : false;
 
 if (isset($aPlugin['isRequired']) && $aPlugin['isRequired'] == 'yes') {
 	$pluginTypeColor = "red";
@@ -51,7 +51,7 @@ if (isset($aPlugin['isRequired']) && $aPlugin['isRequired'] == 'yes') {
 		<?php wp_nonce_field('wiloke-service-nonce', 'wiloke-service-nonce-value'); ?>
         <div class="ui two buttons wil-button-wrapper"
              data-item-slug="<?php echo esc_attr($aPlugin['slug']); ?>"
-             data-item-path="<?php echo esc_attr($this->buildPluginPathInfo($aPlugin['slug'])); ?>"
+             data-item-path="<?php echo esc_attr($this->buildPluginPathInfo($aPlugin)); ?>"
              data-item-type="plugin">
 			<?php if (!$aCurrentPluginInfo) : ?>
                 <div class="ui basic green button">
@@ -66,7 +66,7 @@ if (isset($aPlugin['isRequired']) && $aPlugin['isRequired'] == 'yes') {
                        href="<?php echo esc_url($this->updatechangeLogURL($aPlugin['slug'])); ?>">Update</a>
                 </div>
 			<?php else: ?>
-				<?php if (!is_plugin_active($this->buildPluginPathInfo($aPlugin['slug']))) : ?>
+				<?php if (!is_plugin_active($this->buildPluginPathInfo($aPlugin))) : ?>
                     <div class="ui basic green button">
                         <a href="#"
                            class="wil-active-plugin wil-btn-action"

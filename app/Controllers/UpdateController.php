@@ -400,7 +400,7 @@ class UpdateController
 	 *
 	 * @return string
 	 */
-	private function buildPluginPathInfo(array $aPlugin)
+	private function buildPluginPathInfo($aPlugin)
 	{
 	    if (isset($aPlugin['path']) && !empty($aPlugin['path'])) {
 	        return $aPlugin['path'];
