@@ -131,7 +131,7 @@ class UpdateController
 				$this->aResponse['aPlugins'] = [];
 			} else {
 				foreach ($aPluginResponse['items'] as $aPlugin) {
-					$this->aPlugins[$this->buildPluginPathInfo($aPlugin['slug'])] = $aPlugin;
+					$this->aPlugins[$this->buildPluginPathInfo($aPlugin)] = $aPlugin;
 				}
 
 				$this->aResponse['aPlugins'] = $this->aPlugins;
@@ -367,7 +367,7 @@ class UpdateController
 	{
 		return (object)[
 			'slug'         => $aPlugin['slug'],
-			'plugin'       => $this->buildPluginPathInfo($aPlugin['slug']),
+			'plugin'       => $this->buildPluginPathInfo($aPlugin),
 			'new_version'  => $aPlugin['version'],
 			'newVersion'   => $aPlugin['version'],
 			'url'          => isset($aPlugin['changelog']) && !empty($aPlugin['changelog']) ?
@@ -396,25 +396,16 @@ class UpdateController
 	}
 
 	/**
-	 * @param $pluginID
+	 * @param $aPlugin
 	 *
 	 * @return string
 	 */
-	private function buildPluginPathInfo($pluginID)
+	private function buildPluginPathInfo(array $aPlugin)
 	{
-		return $pluginID . '/' . $pluginID . '.php';
-	}
-
-	/**
-	 * @param $pluginID
-	 *
-	 * @return string
-	 */
-	private function updatechangeLogURL($pluginID)
-	{
-		return wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=') .
-			$this->buildPluginPathInfo($pluginID),
-			'upgrade-plugin_' . $this->buildPluginPathInfo($pluginID));
+	    if (isset($aPlugin['path']) && !empty($aPlugin['path'])) {
+	        return $aPlugin['path'];
+        }
+		return $aPlugin['slug'] . '/' . $aPlugin['slug'] . '.php';
 	}
 
 	/**
@@ -494,7 +485,7 @@ class UpdateController
 			}
 
 			foreach ($this->aPlugins as $aPlugin) {
-				$path = $this->buildPluginPathInfo($aPlugin['slug']);
+				$path = $this->buildPluginPathInfo($aPlugin);
 
 				if (isset($this->aInstalledPlugins[$path]) &&
 					version_compare($this->aInstalledPlugins[$path]['Version'],
