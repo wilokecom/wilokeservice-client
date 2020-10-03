@@ -86,6 +86,13 @@ class UpdateController
 		}
 	}
 
+	private function updateChangeLogURL($aPlugin)
+	{
+		return wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=') .
+			$this->buildPluginPathInfo($aPlugin),
+			'upgrade-plugin_' . $this->buildPluginPathInfo($aPlugin));
+	}
+
 	/**
 	 * @param $r
 	 * @param $url

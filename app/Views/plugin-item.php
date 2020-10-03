@@ -63,7 +63,7 @@ if (isset($aPlugin['isRequired']) && $aPlugin['isRequired'] == 'yes') {
 			<?php elseif (General::isNewVersion($aPlugin['version'], $aCurrentPluginInfo['Version'])): ?>
                 <div class="ui basic green button">
                     <a class="wil-update-plugin"
-                       href="<?php echo esc_url($this->updatechangeLogURL($aPlugin['slug'])); ?>">Update</a>
+                       href="<?php echo esc_url($this->updateChangeLogURL($aPlugin)); ?>">Update</a>
                 </div>
 			<?php else: ?>
 				<?php if (!is_plugin_active($this->buildPluginPathInfo($aPlugin))) : ?>
