@@ -373,7 +373,7 @@ class UpdateController
 			'url'          => isset($aPlugin['changelog']) && !empty($aPlugin['changelog']) ?
 				$aPlugin['changelog'] :
 				wilokeServiceClientGetConfigFile('app')['defaultChangeLogUrl'],
-			'package'      => $aPlugin['download'],
+			'package'      => isset($aPlugin['download']) && !empty($aPlugin['download']) ? $aPlugin['download'] : '',
 			'productType'  => isset($aPlugin['productType']) && !empty($aPlugin['productType']) ?
 				$aPlugin['productType'] : 'free',
 			'productUrl'   => isset($aPlugin['productUrl']) && !empty($aPlugin['productUrl']) ?
