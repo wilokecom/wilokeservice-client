@@ -42,6 +42,7 @@ class UpdateController
 		add_action('wilokeservice-clients/after/theme-updates', [$this, 'showUpPlugins'], 20);
 		add_action('wilokeservice-clients/after/theme-updates', [$this, 'closeUpdateForm'], 30);
 		add_action('admin_enqueue_scripts', [$this, 'enqueueScripts']);
+		add_action('wp_enqueue_scripts', [$this, 'frontEndEnqueueScripts']);
 
 		add_filter('pre_set_site_transient_update_plugins', [$this, 'updatePlugins']);
 		add_filter('pre_set_transient_update_plugins', [$this, 'updatePlugins']);
@@ -409,9 +410,9 @@ class UpdateController
 	 */
 	private function buildPluginPathInfo($aPlugin)
 	{
-	    if (isset($aPlugin['path']) && !empty($aPlugin['path'])) {
-	        return $aPlugin['path'];
-        }
+		if (isset($aPlugin['path']) && !empty($aPlugin['path'])) {
+			return $aPlugin['path'];
+		}
 		return $aPlugin['slug'] . '/' . $aPlugin['slug'] . '.php';
 	}
 
@@ -507,11 +508,17 @@ class UpdateController
 		return $oTransient;
 	}
 
+	public function frontEndEnqueueScripts()
+	{
+		wp_localize_script('jquery', 'WILOKESERVICE_ACCESS_TOKEN', Option::getOptionField('secret_token'));
+	}
+
 	/**
 	 * @return bool
 	 */
 	public function enqueueScripts()
 	{
+		wp_localize_script('jquery', 'WILOKESERVICE_ACCESS_TOKEN', Option::getOptionField('secret_token'));
 		if (!General::isWilokeServicePage()) {
 			return false;
 		}
