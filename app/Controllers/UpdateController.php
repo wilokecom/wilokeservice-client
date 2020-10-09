@@ -518,10 +518,7 @@ class UpdateController
 	 */
 	public function enqueueScripts()
 	{
-		if (!empty(Option::getOptionField('secret_token'))) {
-			wp_localize_script('jquery', 'WILOKESERVICE_ACCESS_TOKEN', Option::getOptionField('secret_token', 'empty'));
-		}
-
+		wp_localize_script('jquery', 'WILOKESERVICE_ACCESS_TOKEN', Option::getOptionField('secret_token', 'empty'));
 		if (!General::isWilokeServicePage()) {
 			return false;
 		}

@@ -23,6 +23,6 @@ class Option
     {
         self::getOptions();
         
-        return isset(self::$aOptions[$field]) ? self::$aOptions[$field] : $default;
+        return isset(self::$aOptions[$field]) && !empty(self::$aOptions[$field]) ? self::$aOptions[$field] : $default;
     }
 }
