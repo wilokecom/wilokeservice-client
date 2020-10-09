@@ -19,10 +19,10 @@ class Option
         return self::$aOptions;
     }
     
-    public static function getOptionField($field)
+    public static function getOptionField($field, $default = '')
     {
         self::getOptions();
         
-        return isset(self::$aOptions[$field]) ? self::$aOptions[$field] : '';
+        return isset(self::$aOptions[$field]) ? self::$aOptions[$field] : $default;
     }
 }

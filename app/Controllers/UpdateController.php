@@ -510,7 +510,7 @@ class UpdateController
 
 	public function frontEndEnqueueScripts()
 	{
-		wp_localize_script('jquery', 'WILOKESERVICE_ACCESS_TOKEN', Option::getOptionField('secret_token'));
+		wp_localize_script('jquery', 'WILOKESERVICE_ACCESS_TOKEN', Option::getOptionField('secret_token', 'empty'));
 	}
 
 	/**
@@ -518,19 +518,22 @@ class UpdateController
 	 */
 	public function enqueueScripts()
 	{
-		wp_localize_script('jquery', 'WILOKESERVICE_ACCESS_TOKEN', Option::getOptionField('secret_token'));
+		if (!empty(Option::getOptionField('secret_token'))) {
+			wp_localize_script('jquery', 'WILOKESERVICE_ACCESS_TOKEN', Option::getOptionField('secret_token', 'empty'));
+		}
+
 		if (!General::isWilokeServicePage()) {
 			return false;
 		}
 
 		wp_enqueue_style('style', WILOKESERVICE_CLIENT_SOURCE . 'style.css');
 		wp_enqueue_script(
-		        'updateplugin',
-                WILOKESERVICE_CLIENT_SOURCE . 'updateplugin.js',
-                ['jquery'],
+			'updateplugin',
+			WILOKESERVICE_CLIENT_SOURCE . 'updateplugin.js',
+			['jquery'],
 			WILOKESERVICE_VERSION,
-                true
-        );
+			true
+		);
 	}
 
 	public function renderHeading()
