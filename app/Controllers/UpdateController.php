@@ -524,9 +524,13 @@ class UpdateController
 		}
 
 		wp_enqueue_style('style', WILOKESERVICE_CLIENT_SOURCE . 'style.css');
-		wp_enqueue_script('updates');
-		wp_enqueue_script('updateplugin', WILOKESERVICE_CLIENT_SOURCE . 'updateplugin.js', ['jquery', 'updates'],
-			WILOKESERVICE_VERSION, true);
+		wp_enqueue_script(
+		        'updateplugin',
+                WILOKESERVICE_CLIENT_SOURCE . 'updateplugin.js',
+                ['jquery'],
+			WILOKESERVICE_VERSION,
+                true
+        );
 	}
 
 	public function renderHeading()
