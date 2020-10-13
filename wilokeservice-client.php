@@ -104,20 +104,4 @@ function wilokeServicePostRequest()
 {
 	return App::get('postAPI');
 }
-
-register_activation_hook(
-	__FILE__,
-	[
-		'\WilokeServiceClient\Controllers\ScheduleCheckUpdateController',
-		'setupCheckUpdateTwiceDaily'
-	]
-);
-register_deactivation_hook(
-	__FILE__,
-	[
-		'\WilokeServiceClient\Controllers\ScheduleCheckUpdateController',
-		'clearCheckUpdateTwiceDaily'
-	]
-);
-
 do_action('wilokeservice/loaded');

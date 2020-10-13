@@ -40,7 +40,9 @@ class UpdateController
 		add_action('wilokeservice-clients/after/theme-updates', [$this, 'openUpdateForm'], 1);
 		add_action('wilokeservice-clients/after/theme-updates', [$this, 'selectThemes']);
 		add_action('wilokeservice-clients/after/theme-updates', [$this, 'showUpPlugins'], 20);
-		add_action('wilokeservice-clients/after/theme-updates', [$this, 'closeUpdateForm'], 30);
+		add_action('wilokeservice-clients/after/theme-updates', [$this, 'showPremiumPlugins'], 25);
+		add_action('wilokeservice-clients/after/theme-updates', [$this, 'showRefreshButton'], 30);
+		add_action('wilokeservice-clients/after/theme-updates', [$this, 'closeUpdateForm'], 35);
 		add_action('admin_enqueue_scripts', [$this, 'enqueueScripts']);
 		add_action('wp_enqueue_scripts', [$this, 'frontEndEnqueueScripts']);
 
@@ -624,6 +626,54 @@ class UpdateController
 		<?php
 	}
 
+	public function showPremiumPlugins()
+	{
+		if (!$this->isEnteredToken()) {
+			return false;
+		}
+
+
+		$aResponse = wilokeServiceRestRequest()->request(wilokeServiceGetRequest()
+			->setEndpoint('premium-plugins'))
+			->getResponse();
+		if ($aResponse['status'] === 'error') {
+			?>
+            <p class="ui message error positive"><?php echo $aResponse['msg']; ?></p>
+			<?php
+		} else {
+			if (empty($aResponse['items'])) {
+				return false;
+			}
+			?>
+            <div id="wilokeservice-update-plugins" class="ui segment">
+                <h3 class="ui heading"><?php echo 'Premium Plugins'; ?></h3>
+                <div class="ui message wil-plugin-update-msg hidden"></div>
+
+
+                <div class="ui cards" style="margin-bottom: 10px;">
+					<?php foreach ($aResponse['items'] as $aPlugin) : ?>
+						<?php include WILOKESERVICE_CLIENT_VIEWS_DIR . 'plugin-item.php'; ?>
+					<?php endforeach; ?>
+                </div>
+            </div>
+			<?php
+		}
+	}
+
+	public function showRefreshButton()
+	{
+		?>
+        <a id="wiloke-refresh-update-btn"
+           class="ui button green"
+           href="<?php echo $this->generateLink(
+			   [
+				   'page'              => wilokeServiceClientGetConfigFile('app')['updateSlug'],
+				   'is-refresh-update' => 'yes'
+			   ]
+		   ); ?>">Refresh</a>
+		<?php
+	}
+
 	/**
 	 * @return bool
 	 */
@@ -658,15 +708,6 @@ class UpdateController
                 </div>
 			<?php endif; ?>
         </div>
-
-        <a id="wiloke-refresh-update-btn"
-           class="ui button green"
-           href="<?php echo $this->generateLink(
-			   [
-				   'page'              => wilokeServiceClientGetConfigFile('app')['updateSlug'],
-				   'is-refresh-update' => 'yes'
-			   ]
-		   ); ?>">Refresh</a>
 		<?php
 	}
 
