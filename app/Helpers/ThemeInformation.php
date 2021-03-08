@@ -26,7 +26,7 @@ class ThemeInformation
 
 		$stylesheet = self::$oTheme->get_stylesheet();
 		if (strpos($stylesheet, 'child') !== false) {
-			$stylesheet = str_replace(['child', 'childtheme', 'child-theme'], ['', '', ''], $stylesheet);
+			$stylesheet = str_replace(['childtheme', 'child-theme', 'child', '-'], ['', '', '', ''], $stylesheet);
 		}
 
 		return $stylesheet;
@@ -35,9 +35,9 @@ class ThemeInformation
 	public static function isWilokeThemeAuthor()
 	{
 		self::getTheme();
-		
+
 		$author = self::$oTheme->get('Author');
-		
+
 		return strpos(strtolower($author), 'wiloke') !== false;
 	}
 }
